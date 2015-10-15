@@ -1,0 +1,27 @@
+BLOSUM62
+SIR
+A6KXE4
+A6KYC4
+
+// SusD superfamily sequences
+A6KXE4
+A6KYC4
+A6L054
+A6L326
+A6LIX4
+Q5LEF0
+Q5LHN1
+Q8A577
+
+// ABC_tran family sequences
+//// ATP-Binding subfamily A
+O95477
+P41233
+//// Multidrug resistance associated subfamily
+O35379
+P33527
+Q6UR05
+Q5F364
+//// ATP-Binding subfamily G
+Q9H222
+Q99PE8
