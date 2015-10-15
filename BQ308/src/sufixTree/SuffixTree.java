@@ -24,7 +24,7 @@ public class SuffixTree {
 			for(int j = 1; j<=i; j++){					// Create a path for the suffix X[j..i] 
 				Node u;
 				if(j == i) u = st.root;					// At the end of iterations, run for root
-				else u = st.locus(j,i-1, st.root, X);		// Find the locus of X[j..i-1]
+				else u = locus(j,i-1, st.root, X);		// Find the locus of X[j..i-1]
 				
 				Node n = u.next(xi, X);
 				if(n == null){							// If there is no xi after u
@@ -32,11 +32,13 @@ public class SuffixTree {
 						u.LENGTH += 1;					// Extend label of u as u+xi
 					}else{
 						// Insert a new node w = X[j..i] and a edge (u,w)
-						u.addChild(new Node(index,j,u.LENGTH+1));
+						u.addChild(new Node(index,i,1));
 						index++;
 					}
 				}else if(n.LENGTH > 1){					// If there is xi, bifurcate path
-					Node newChild = new Node(index,n.BEGIN,u.LENGTH+1);
+					Node newChild = new Node(index,n.BEGIN, 1);
+					n.BEGIN++;							// Allow nested search
+					n.LENGTH--;
 					newChild.addChild(n);
 					u.addChild(newChild);
 					index++;
@@ -65,14 +67,16 @@ public class SuffixTree {
 		}
 	}
 
-	private Node locus(int begin, int end, Node e, String str) {
-		if(e.BEGIN > 0 && 
-		str.substring(e.BEGIN-1, e.BEGIN+e.LENGTH-1).equals(str.substring(begin-1, end))) return e;
+	private static Node locus(int begin, int end, Node e, String str) {
+		if(e.BEGIN > 0 && str.substring(e.BEGIN-1, e.BEGIN+e.LENGTH-1).equals(str.substring(begin-1, end))) return e;
 		else if(e.hasChilds()){
-			List<Node> childs = e.getChilds();
-			for (Node node : childs) {
-				Node x = locus(begin,end,node,str);
-				if(x != null) return x;
+			for (Node node : e.getChilds()) {
+				String child = str.substring(node.BEGIN-1, node.BEGIN+node.LENGTH-1);
+				String search = str.substring(begin-1+e.LENGTH, end);
+				if(search.startsWith(child)){
+					Node x = locus(begin+e.LENGTH,end,node,str);
+					if(x != null) return x;
+				}
 			}
 		}else{
 			return null;
