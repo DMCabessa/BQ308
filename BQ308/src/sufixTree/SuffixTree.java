@@ -27,7 +27,6 @@ public class SuffixTree {
 				else u = st.locus(j,i-1, st.root, X);		// Find the locus of X[j..i-1]
 				
 				Node n = u.next(xi, X);
-				boolean breakpoint = true;
 				if(n == null){							// If there is no xi after u
 					if(!u.hasChilds()){					// If u is a leaf
 						u.LENGTH += 1;					// Extend label of u as u+xi
