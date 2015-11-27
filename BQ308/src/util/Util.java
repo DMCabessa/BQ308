@@ -25,5 +25,28 @@ public class Util {
 
 	    return randomNum;
 	}
+	
+	/**
+	 * Returns terminal number of n recursively.
+	 * <code>terminal(n) = n + (n-1) + (n-2) + ... + 1</code>
+	 * 
+	 * @param n value
+	 * @return Terminal integer
+	 */
+	public static int terminal(int n){
+		if(n <= 1) return 1;
+		else return n + terminal(n-1);
+	}
 
+	/**
+	 * Returns the equivalent char to an integer i.
+	 * If the character is out of [A-Z] range, then return '?'.
+	 * 
+	 * @param i integer
+	 * @return char in [A-Z]
+	 */
+	public static char toChar(int i){
+		int converted = i+65;
+		return converted <= 90 && converted >= 65 ? (char) (i + 65) : '?';
+	}
 }

@@ -1,0 +1,581 @@
+# Possíveis
+
+## 1 ============================================
+Minimum Spawning Tree T
+C --(4)-- A
+B --(5)-- C
+D --(3)-- B
+
+Auxiliary tree R
+(B, C) --> (D, B) (C, A)
+(D, B) --> D B
+(C, A) --> C A
+
+Lowest common ancestor (B,A) --> (B,C)
+Lowest common ancestor (C,A) --> (C,A)
+Lowest common ancestor (C,B) --> (B,C)
+Lowest common ancestor (D,A) --> (B,C)
+Lowest common ancestor (D,B) --> (D,B)
+Lowest common ancestor (D,C) --> (B,C)
+
+Cut-Weight array
+[ 2 2 6 ]
+
+Ultrametric tree U
+(B, C) --> (D, B){2.0} (C, A){2.0}
+(D, B) --> D{1.0} B{1.0}
+(C, A) --> C{1.0} A{1.0}
+=================================================
+
+## 2 ============================================
+Minimum Spawning Tree T
+C --(4)-- A
+A --(4)-- D
+D --(3)-- B
+
+Auxiliary tree R
+(C, A) --> C (A, D)
+(A, D) --> A (D, B)
+(D, B) --> D B
+
+Lowest common ancestor (B,A) --> (A,D)
+Lowest common ancestor (C,A) --> (C,A)
+Lowest common ancestor (C,B) --> (C,A)
+Lowest common ancestor (D,A) --> (A,D)
+Lowest common ancestor (D,B) --> (D,B)
+Lowest common ancestor (D,C) --> (C,A)
+
+Cut-Weight array
+[ 2 4 5 ]
+
+Ultrametric tree U
+(C, A) --> C{2.5} (A, D){0.5}
+(A, D) --> A{2.0} (D, B){1.0}
+(D, B) --> D{1.0} B{1.0}
+=================================================
+
+## 3 ============================================
+Minimum Spawning Tree T
+A --(8)-- D
+B --(8)-- D
+D --(8)-- C
+
+Auxiliary tree R
+(A, D) --> A (D, C)
+(D, C) --> (B, D) C
+(B, D) --> B D
+
+Lowest common ancestor (B,A) --> (A,D)
+Lowest common ancestor (C,A) --> (A,D)
+Lowest common ancestor (C,B) --> (D,C)
+Lowest common ancestor (D,A) --> (A,D)
+Lowest common ancestor (D,B) --> (B,D)
+Lowest common ancestor (D,C) --> (D,C)
+
+Cut-Weight array
+[ 1 6 5 ]
+
+Ultrametric tree U
+(D, C) --> (A, D){0.5} C{3.0}
+(A, D) --> A{2.5} (B, D){2.0}
+(B, D) --> B{0.5} D{0.5}
+=================================================
+
+## 4 ============================================
+Minimum Spawning Tree T
+C --(4)-- B
+F --(6)-- A
+G --(5)-- E
+E --(4)-- D
+A --(6)-- C
+D --(5)-- H
+H --(5)-- C
+
+Auxiliary tree R
+(A, C) --> (F, A) (G, E)
+(F, A) --> F A
+(G, E) --> G (D, H)
+(D, H) --> (E, D) (H, C)
+(E, D) --> E D
+(H, C) --> H (C, B)
+(C, B) --> C B
+
+Lowest common ancestor (B,A) --> (A,C)
+Lowest common ancestor (C,A) --> (A,C)
+Lowest common ancestor (C,B) --> (C,B)
+Lowest common ancestor (D,A) --> (A,C)
+Lowest common ancestor (D,B) --> (D,H)
+Lowest common ancestor (D,C) --> (D,H)
+Lowest common ancestor (E,A) --> (A,C)
+Lowest common ancestor (E,B) --> (D,H)
+Lowest common ancestor (E,C) --> (D,H)
+Lowest common ancestor (E,D) --> (E,D)
+Lowest common ancestor (F,A) --> (F,A)
+Lowest common ancestor (F,B) --> (A,C)
+Lowest common ancestor (F,C) --> (A,C)
+Lowest common ancestor (F,D) --> (A,C)
+Lowest common ancestor (F,E) --> (A,C)
+Lowest common ancestor (G,A) --> (A,C)
+Lowest common ancestor (G,B) --> (G,E)
+Lowest common ancestor (G,C) --> (G,E)
+Lowest common ancestor (G,D) --> (G,E)
+Lowest common ancestor (G,E) --> (G,E)
+Lowest common ancestor (G,F) --> (A,C)
+Lowest common ancestor (H,A) --> (A,C)
+Lowest common ancestor (H,B) --> (H,C)
+Lowest common ancestor (H,C) --> (H,C)
+Lowest common ancestor (H,D) --> (D,H)
+Lowest common ancestor (H,E) --> (D,H)
+Lowest common ancestor (H,F) --> (A,C)
+Lowest common ancestor (H,G) --> (G,E)
+
+Cut-Weight array
+[ 1 1 3 5 4 5 6 ]
+
+Ultrametric tree U
+(A, C) --> (F, A){0.5} (D, H){0.5}
+(F, A) --> F{2.5} A{2.5}
+(D, H) --> (G, E){0.5} (H, C){1.0}
+(G, E) --> G{2.0} (E, D){1.5}
+(E, D) --> E{0.5} D{0.5}
+(H, C) --> H{1.5} (C, B){1.0}
+(C, B) --> C{0.5} B{0.5}
+=================================================
+
+# Impossíveis
+
+## 5 ============================================
+Minimum Spawning Tree T
+F --(3)-- C
+G --(5)-- B
+E --(4)-- O
+M --(4)-- O
+O --(3)-- C
+P --(4)-- O
+D --(4)-- N
+K --(4)-- H
+C --(5)-- L
+L --(4)-- N
+N --(3)-- I
+J --(4)-- D
+A --(4)-- N
+B --(3)-- A
+H --(4)-- J
+
+Auxiliary tree R
+(G, B) --> G (C, L)
+(C, L) --> (M, O) (A, N)
+(M, O) --> M (E, O)
+(E, O) --> E (P, O)
+(P, O) --> P (F, C)
+(F, C) --> F (O, C)
+(O, C) --> O C
+(A, N) --> (B, A) (J, D)
+(B, A) --> B A
+(J, D) --> (H, J) (L, N)
+(H, J) --> (K, H) J
+(K, H) --> K H
+(L, N) --> L (D, N)
+(D, N) --> D (N, I)
+(N, I) --> N I
+
+Lowest common ancestor (B,A) --> (B,A)
+Lowest common ancestor (C,A) --> (C,L)
+Lowest common ancestor (C,B) --> (C,L)
+Lowest common ancestor (D,A) --> (A,N)
+Lowest common ancestor (D,B) --> (A,N)
+Lowest common ancestor (D,C) --> (C,L)
+Lowest common ancestor (E,A) --> (C,L)
+Lowest common ancestor (E,B) --> (C,L)
+Lowest common ancestor (E,C) --> (E,O)
+Lowest common ancestor (E,D) --> (C,L)
+Lowest common ancestor (F,A) --> (C,L)
+Lowest common ancestor (F,B) --> (C,L)
+Lowest common ancestor (F,C) --> (F,C)
+Lowest common ancestor (F,D) --> (C,L)
+Lowest common ancestor (F,E) --> (E,O)
+Lowest common ancestor (G,A) --> (G,B)
+Lowest common ancestor (G,B) --> (G,B)
+Lowest common ancestor (G,C) --> (G,B)
+Lowest common ancestor (G,D) --> (G,B)
+Lowest common ancestor (G,E) --> (G,B)
+Lowest common ancestor (G,F) --> (G,B)
+Lowest common ancestor (H,A) --> (A,N)
+Lowest common ancestor (H,B) --> (A,N)
+Lowest common ancestor (H,C) --> (C,L)
+Lowest common ancestor (H,D) --> (J,D)
+Lowest common ancestor (H,E) --> (C,L)
+Lowest common ancestor (H,F) --> (C,L)
+Lowest common ancestor (H,G) --> (G,B)
+Lowest common ancestor (I,A) --> (A,N)
+Lowest common ancestor (I,B) --> (A,N)
+Lowest common ancestor (I,C) --> (C,L)
+Lowest common ancestor (I,D) --> (D,N)
+Lowest common ancestor (I,E) --> (C,L)
+Lowest common ancestor (I,F) --> (C,L)
+Lowest common ancestor (I,G) --> (G,B)
+Lowest common ancestor (I,H) --> (J,D)
+Lowest common ancestor (J,A) --> (A,N)
+Lowest common ancestor (J,B) --> (A,N)
+Lowest common ancestor (J,C) --> (C,L)
+Lowest common ancestor (J,D) --> (J,D)
+Lowest common ancestor (J,E) --> (C,L)
+Lowest common ancestor (J,F) --> (C,L)
+Lowest common ancestor (J,G) --> (G,B)
+Lowest common ancestor (J,H) --> (H,J)
+Lowest common ancestor (J,I) --> (J,D)
+Lowest common ancestor (K,A) --> (A,N)
+Lowest common ancestor (K,B) --> (A,N)
+Lowest common ancestor (K,C) --> (C,L)
+Lowest common ancestor (K,D) --> (J,D)
+Lowest common ancestor (K,E) --> (C,L)
+Lowest common ancestor (K,F) --> (C,L)
+Lowest common ancestor (K,G) --> (G,B)
+Lowest common ancestor (K,H) --> (K,H)
+Lowest common ancestor (K,I) --> (J,D)
+Lowest common ancestor (K,J) --> (H,J)
+Lowest common ancestor (L,A) --> (A,N)
+Lowest common ancestor (L,B) --> (A,N)
+Lowest common ancestor (L,C) --> (C,L)
+Lowest common ancestor (L,D) --> (L,N)
+Lowest common ancestor (L,E) --> (C,L)
+Lowest common ancestor (L,F) --> (C,L)
+Lowest common ancestor (L,G) --> (G,B)
+Lowest common ancestor (L,H) --> (J,D)
+Lowest common ancestor (L,I) --> (L,N)
+Lowest common ancestor (L,J) --> (J,D)
+Lowest common ancestor (L,K) --> (J,D)
+Lowest common ancestor (M,A) --> (C,L)
+Lowest common ancestor (M,B) --> (C,L)
+Lowest common ancestor (M,C) --> (M,O)
+Lowest common ancestor (M,D) --> (C,L)
+Lowest common ancestor (M,E) --> (M,O)
+Lowest common ancestor (M,F) --> (M,O)
+Lowest common ancestor (M,G) --> (G,B)
+Lowest common ancestor (M,H) --> (C,L)
+Lowest common ancestor (M,I) --> (C,L)
+Lowest common ancestor (M,J) --> (C,L)
+Lowest common ancestor (M,K) --> (C,L)
+Lowest common ancestor (M,L) --> (C,L)
+Lowest common ancestor (N,A) --> (A,N)
+Lowest common ancestor (N,B) --> (A,N)
+Lowest common ancestor (N,C) --> (C,L)
+Lowest common ancestor (N,D) --> (D,N)
+Lowest common ancestor (N,E) --> (C,L)
+Lowest common ancestor (N,F) --> (C,L)
+Lowest common ancestor (N,G) --> (G,B)
+Lowest common ancestor (N,H) --> (J,D)
+Lowest common ancestor (N,I) --> (N,I)
+Lowest common ancestor (N,J) --> (J,D)
+Lowest common ancestor (N,K) --> (J,D)
+Lowest common ancestor (N,L) --> (L,N)
+Lowest common ancestor (N,M) --> (C,L)
+Lowest common ancestor (O,A) --> (C,L)
+Lowest common ancestor (O,B) --> (C,L)
+Lowest common ancestor (O,C) --> (O,C)
+Lowest common ancestor (O,D) --> (C,L)
+Lowest common ancestor (O,E) --> (E,O)
+Lowest common ancestor (O,F) --> (F,C)
+Lowest common ancestor (O,G) --> (G,B)
+Lowest common ancestor (O,H) --> (C,L)
+Lowest common ancestor (O,I) --> (C,L)
+Lowest common ancestor (O,J) --> (C,L)
+Lowest common ancestor (O,K) --> (C,L)
+Lowest common ancestor (O,L) --> (C,L)
+Lowest common ancestor (O,M) --> (M,O)
+Lowest common ancestor (O,N) --> (C,L)
+Lowest common ancestor (P,A) --> (C,L)
+Lowest common ancestor (P,B) --> (C,L)
+Lowest common ancestor (P,C) --> (P,O)
+Lowest common ancestor (P,D) --> (C,L)
+Lowest common ancestor (P,E) --> (E,O)
+Lowest common ancestor (P,F) --> (P,O)
+Lowest common ancestor (P,G) --> (G,B)
+Lowest common ancestor (P,H) --> (C,L)
+Lowest common ancestor (P,I) --> (C,L)
+Lowest common ancestor (P,J) --> (C,L)
+Lowest common ancestor (P,K) --> (C,L)
+Lowest common ancestor (P,L) --> (C,L)
+Lowest common ancestor (P,M) --> (M,O)
+Lowest common ancestor (P,N) --> (C,L)
+Lowest common ancestor (P,O) --> (P,O)
+
+Cut-Weight array
+[ 2 3 2 3 4 4 1 6 5 4 6 6 4 6 6 ]
+
+Ultrametric tree U
+(J, D) --> (H, J) (G, B)
+(H, J) --> (K, H){2.5} J{3.0}
+(K, H) --> K{0.5} H{0.5}
+(G, B) --> G{3.0} (C, L)
+(C, L) --> (E, O){1.0} (A, N)
+(E, O) --> E{2.0} (M, O)
+(M, O) --> M{2.0} (P, O)
+(P, O) --> P{2.0} (F, C){0.5}
+(F, C) --> F{1.5} (O, C){0.5}
+(O, C) --> O{1.0} C{1.0}
+(A, N) --> (B, A){2.0} (L, N){0.5}
+(B, A) --> B{1.0} A{1.0}
+(L, N) --> L{2.5} (D, N){0.5}
+(D, N) --> D{2.0} (N, I){0.5}
+(N, I) --> N{1.5} I{1.5}
+=================================================
+
+## 6 ============================================
+Minimum Spawning Tree T
+F --(4)-- Q
+G --(5)-- O
+E --(3)-- D
+M --(4)-- I
+S --(4)-- E
+O --(4)-- R
+I --(3)-- B
+R --(3)-- C
+P --(5)-- F
+D --(3)-- R
+K --(3)-- N
+Q --(4)-- S
+C --(4)-- L
+L --(3)-- M
+N --(3)-- B
+J --(3)-- T
+A --(5)-- K
+H --(4)-- E
+T --(3)-- N
+
+Auxiliary tree R
+(A, K) --> A (G, O)
+(G, O) --> G (P, F)
+(P, F) --> P (F, Q)
+(F, Q) --> F (H, E)
+(H, E) --> H (M, I)
+(M, I) --> (S, E) (J, T)
+(S, E) --> (Q, S) (C, L)
+(Q, S) --> Q S
+(C, L) --> (O, R) (L, M)
+(O, R) --> O (D, R)
+(D, R) --> (E, D) (R, C)
+(E, D) --> E D
+(R, C) --> R C
+(L, M) --> L M
+(J, T) --> J (I, B)
+(I, B) --> I (K, N)
+(K, N) --> K (N, B)
+(N, B) --> (T, N) B
+(T, N) --> T N
+
+Lowest common ancestor (B,A) --> (A,K)
+Lowest common ancestor (C,A) --> (A,K)
+Lowest common ancestor (C,B) --> (M,I)
+Lowest common ancestor (D,A) --> (A,K)
+Lowest common ancestor (D,B) --> (M,I)
+Lowest common ancestor (D,C) --> (D,R)
+Lowest common ancestor (E,A) --> (A,K)
+Lowest common ancestor (E,B) --> (M,I)
+Lowest common ancestor (E,C) --> (D,R)
+Lowest common ancestor (E,D) --> (E,D)
+Lowest common ancestor (F,A) --> (A,K)
+Lowest common ancestor (F,B) --> (F,Q)
+Lowest common ancestor (F,C) --> (F,Q)
+Lowest common ancestor (F,D) --> (F,Q)
+Lowest common ancestor (F,E) --> (F,Q)
+Lowest common ancestor (G,A) --> (A,K)
+Lowest common ancestor (G,B) --> (G,O)
+Lowest common ancestor (G,C) --> (G,O)
+Lowest common ancestor (G,D) --> (G,O)
+Lowest common ancestor (G,E) --> (G,O)
+Lowest common ancestor (G,F) --> (G,O)
+Lowest common ancestor (H,A) --> (A,K)
+Lowest common ancestor (H,B) --> (H,E)
+Lowest common ancestor (H,C) --> (H,E)
+Lowest common ancestor (H,D) --> (H,E)
+Lowest common ancestor (H,E) --> (H,E)
+Lowest common ancestor (H,F) --> (F,Q)
+Lowest common ancestor (H,G) --> (G,O)
+Lowest common ancestor (I,A) --> (A,K)
+Lowest common ancestor (I,B) --> (I,B)
+Lowest common ancestor (I,C) --> (M,I)
+Lowest common ancestor (I,D) --> (M,I)
+Lowest common ancestor (I,E) --> (M,I)
+Lowest common ancestor (I,F) --> (F,Q)
+Lowest common ancestor (I,G) --> (G,O)
+Lowest common ancestor (I,H) --> (H,E)
+Lowest common ancestor (J,A) --> (A,K)
+Lowest common ancestor (J,B) --> (J,T)
+Lowest common ancestor (J,C) --> (M,I)
+Lowest common ancestor (J,D) --> (M,I)
+Lowest common ancestor (J,E) --> (M,I)
+Lowest common ancestor (J,F) --> (F,Q)
+Lowest common ancestor (J,G) --> (G,O)
+Lowest common ancestor (J,H) --> (H,E)
+Lowest common ancestor (J,I) --> (J,T)
+Lowest common ancestor (K,A) --> (A,K)
+Lowest common ancestor (K,B) --> (K,N)
+Lowest common ancestor (K,C) --> (M,I)
+Lowest common ancestor (K,D) --> (M,I)
+Lowest common ancestor (K,E) --> (M,I)
+Lowest common ancestor (K,F) --> (F,Q)
+Lowest common ancestor (K,G) --> (G,O)
+Lowest common ancestor (K,H) --> (H,E)
+Lowest common ancestor (K,I) --> (I,B)
+Lowest common ancestor (K,J) --> (J,T)
+Lowest common ancestor (L,A) --> (A,K)
+Lowest common ancestor (L,B) --> (M,I)
+Lowest common ancestor (L,C) --> (C,L)
+Lowest common ancestor (L,D) --> (C,L)
+Lowest common ancestor (L,E) --> (C,L)
+Lowest common ancestor (L,F) --> (F,Q)
+Lowest common ancestor (L,G) --> (G,O)
+Lowest common ancestor (L,H) --> (H,E)
+Lowest common ancestor (L,I) --> (M,I)
+Lowest common ancestor (L,J) --> (M,I)
+Lowest common ancestor (L,K) --> (M,I)
+Lowest common ancestor (M,A) --> (A,K)
+Lowest common ancestor (M,B) --> (M,I)
+Lowest common ancestor (M,C) --> (C,L)
+Lowest common ancestor (M,D) --> (C,L)
+Lowest common ancestor (M,E) --> (C,L)
+Lowest common ancestor (M,F) --> (F,Q)
+Lowest common ancestor (M,G) --> (G,O)
+Lowest common ancestor (M,H) --> (H,E)
+Lowest common ancestor (M,I) --> (M,I)
+Lowest common ancestor (M,J) --> (M,I)
+Lowest common ancestor (M,K) --> (M,I)
+Lowest common ancestor (M,L) --> (L,M)
+Lowest common ancestor (N,A) --> (A,K)
+Lowest common ancestor (N,B) --> (N,B)
+Lowest common ancestor (N,C) --> (M,I)
+Lowest common ancestor (N,D) --> (M,I)
+Lowest common ancestor (N,E) --> (M,I)
+Lowest common ancestor (N,F) --> (F,Q)
+Lowest common ancestor (N,G) --> (G,O)
+Lowest common ancestor (N,H) --> (H,E)
+Lowest common ancestor (N,I) --> (I,B)
+Lowest common ancestor (N,J) --> (J,T)
+Lowest common ancestor (N,K) --> (K,N)
+Lowest common ancestor (N,L) --> (M,I)
+Lowest common ancestor (N,M) --> (M,I)
+Lowest common ancestor (O,A) --> (A,K)
+Lowest common ancestor (O,B) --> (M,I)
+Lowest common ancestor (O,C) --> (O,R)
+Lowest common ancestor (O,D) --> (O,R)
+Lowest common ancestor (O,E) --> (O,R)
+Lowest common ancestor (O,F) --> (F,Q)
+Lowest common ancestor (O,G) --> (G,O)
+Lowest common ancestor (O,H) --> (H,E)
+Lowest common ancestor (O,I) --> (M,I)
+Lowest common ancestor (O,J) --> (M,I)
+Lowest common ancestor (O,K) --> (M,I)
+Lowest common ancestor (O,L) --> (C,L)
+Lowest common ancestor (O,M) --> (C,L)
+Lowest common ancestor (O,N) --> (M,I)
+Lowest common ancestor (P,A) --> (A,K)
+Lowest common ancestor (P,B) --> (P,F)
+Lowest common ancestor (P,C) --> (P,F)
+Lowest common ancestor (P,D) --> (P,F)
+Lowest common ancestor (P,E) --> (P,F)
+Lowest common ancestor (P,F) --> (P,F)
+Lowest common ancestor (P,G) --> (G,O)
+Lowest common ancestor (P,H) --> (P,F)
+Lowest common ancestor (P,I) --> (P,F)
+Lowest common ancestor (P,J) --> (P,F)
+Lowest common ancestor (P,K) --> (P,F)
+Lowest common ancestor (P,L) --> (P,F)
+Lowest common ancestor (P,M) --> (P,F)
+Lowest common ancestor (P,N) --> (P,F)
+Lowest common ancestor (P,O) --> (P,F)
+Lowest common ancestor (Q,A) --> (A,K)
+Lowest common ancestor (Q,B) --> (M,I)
+Lowest common ancestor (Q,C) --> (S,E)
+Lowest common ancestor (Q,D) --> (S,E)
+Lowest common ancestor (Q,E) --> (S,E)
+Lowest common ancestor (Q,F) --> (F,Q)
+Lowest common ancestor (Q,G) --> (G,O)
+Lowest common ancestor (Q,H) --> (H,E)
+Lowest common ancestor (Q,I) --> (M,I)
+Lowest common ancestor (Q,J) --> (M,I)
+Lowest common ancestor (Q,K) --> (M,I)
+Lowest common ancestor (Q,L) --> (S,E)
+Lowest common ancestor (Q,M) --> (S,E)
+Lowest common ancestor (Q,N) --> (M,I)
+Lowest common ancestor (Q,O) --> (S,E)
+Lowest common ancestor (Q,P) --> (P,F)
+Lowest common ancestor (R,A) --> (A,K)
+Lowest common ancestor (R,B) --> (M,I)
+Lowest common ancestor (R,C) --> (R,C)
+Lowest common ancestor (R,D) --> (D,R)
+Lowest common ancestor (R,E) --> (D,R)
+Lowest common ancestor (R,F) --> (F,Q)
+Lowest common ancestor (R,G) --> (G,O)
+Lowest common ancestor (R,H) --> (H,E)
+Lowest common ancestor (R,I) --> (M,I)
+Lowest common ancestor (R,J) --> (M,I)
+Lowest common ancestor (R,K) --> (M,I)
+Lowest common ancestor (R,L) --> (C,L)
+Lowest common ancestor (R,M) --> (C,L)
+Lowest common ancestor (R,N) --> (M,I)
+Lowest common ancestor (R,O) --> (O,R)
+Lowest common ancestor (R,P) --> (P,F)
+Lowest common ancestor (R,Q) --> (S,E)
+Lowest common ancestor (S,A) --> (A,K)
+Lowest common ancestor (S,B) --> (M,I)
+Lowest common ancestor (S,C) --> (S,E)
+Lowest common ancestor (S,D) --> (S,E)
+Lowest common ancestor (S,E) --> (S,E)
+Lowest common ancestor (S,F) --> (F,Q)
+Lowest common ancestor (S,G) --> (G,O)
+Lowest common ancestor (S,H) --> (H,E)
+Lowest common ancestor (S,I) --> (M,I)
+Lowest common ancestor (S,J) --> (M,I)
+Lowest common ancestor (S,K) --> (M,I)
+Lowest common ancestor (S,L) --> (S,E)
+Lowest common ancestor (S,M) --> (S,E)
+Lowest common ancestor (S,N) --> (M,I)
+Lowest common ancestor (S,O) --> (S,E)
+Lowest common ancestor (S,P) --> (P,F)
+Lowest common ancestor (S,Q) --> (Q,S)
+Lowest common ancestor (S,R) --> (S,E)
+Lowest common ancestor (T,A) --> (A,K)
+Lowest common ancestor (T,B) --> (N,B)
+Lowest common ancestor (T,C) --> (M,I)
+Lowest common ancestor (T,D) --> (M,I)
+Lowest common ancestor (T,E) --> (M,I)
+Lowest common ancestor (T,F) --> (F,Q)
+Lowest common ancestor (T,G) --> (G,O)
+Lowest common ancestor (T,H) --> (H,E)
+Lowest common ancestor (T,I) --> (I,B)
+Lowest common ancestor (T,J) --> (J,T)
+Lowest common ancestor (T,K) --> (K,N)
+Lowest common ancestor (T,L) --> (M,I)
+Lowest common ancestor (T,M) --> (M,I)
+Lowest common ancestor (T,N) --> (T,N)
+Lowest common ancestor (T,O) --> (M,I)
+Lowest common ancestor (T,P) --> (P,F)
+Lowest common ancestor (T,Q) --> (M,I)
+Lowest common ancestor (T,R) --> (M,I)
+Lowest common ancestor (T,S) --> (M,I)
+
+Cut-Weight array
+[ 1 1 4 1 3 3 3 6 6 6 4 6 6 6 6 6 6 6 6 ]
+
+Ultrametric tree U
+(J, T) --> J{3.0} (A, K)
+(A, K) --> A{3.0} (G, O)
+(G, O) --> G{3.0} (P, F)
+(P, F) --> P{3.0} (F, Q)
+(F, Q) --> F{3.0} (H, E)
+(H, E) --> H{3.0} (M, I)
+(M, I) --> (S, E) (N, B){1.0}
+(S, E) --> (Q, S){1.0} (C, L)
+(Q, S) --> Q{2.0} S{2.0}
+(C, L) --> (D, R) (L, M){2.5}
+(D, R) --> (E, D){2.5} (O, R)
+(E, D) --> E{0.5} D{0.5}
+(O, R) --> O{3.0} (R, C){1.5}
+(R, C) --> R{1.5} C{1.5}
+(L, M) --> L{0.5} M{0.5}
+(N, B) --> (K, N){0.5} (I, B){0.5}
+(K, N) --> K{1.5} (T, N){1.0}
+(T, N) --> T{0.5} N{0.5}
+(I, B) --> I{1.5} B{1.5}
+=================================================

@@ -1,4 +1,4 @@
-package sufixTree;
+package suffixTree;
 
 public class Main {
 

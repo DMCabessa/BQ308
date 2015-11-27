@@ -1,4 +1,4 @@
-package sufixTree;
+package suffixTree;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
