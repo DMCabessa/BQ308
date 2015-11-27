@@ -1,0 +1,378 @@
+L -2 2 -1 1 -4 4 -3 3 R
+Edges:
++(L,-2)
++(-2,1)
++(1,-4)
++(-4,3)
++(3,R)
+-(R,4)
++(4,-3)
+-(-3,2)
++(2,-1)
+-(-1,L)
+
+Cycles:
+Cycle 1 is Bad
+L -2 1 -4 3 R 4 -3 2 -1 
+
+Components:
+Component 1 is Bad
+Cycles: 1 
+
+
+In presence of bad components...
+----------------------------------------
+
+L -1 1 -2 2 R
+Edges:
++(L,-1)
+-(-1,L)
++(1,-2)
+-(-2,1)
++(2,R)
+-(R,2)
+
+Cycles:
+Cycle 1 is Great
+L -1 
+Cycle 2 is Great
+1 -2 
+Cycle 3 is Great
+2 R 
+
+Components:
+Component 1 is Good
+Cycles: 1 
+Component 2 is Good
+Cycles: 2 
+Component 3 is Good
+Cycles: 3 
+----------------------------------------
+
+L 3 -3 -4 4 1 -1 2 -2 -5 5 R
+Edges:
++(L,3)
++(3,-4)
+-(-4,-3)
++(-3,2)
+-(2,-1)
+-(-1,L)
++(4,1)
++(1,-2)
++(-2,-5)
+-(-5,4)
++(5,R)
+-(R,5)
+
+Cycles:
+Cycle 1 is Good -> Divergent edges +(L,3) and -(-4,-3)
+L 3 -4 -3 2 -1 
+Cycle 2 is Bad
+4 1 -2 -5 
+Cycle 3 is Great
+5 R 
+
+Components:
+Component 1 is Good
+Cycles: 1 2 
+Component 2 is Good
+Cycles: 3 
+
+=================================
+Begin reversal
+=================================
+
+Considering the component with cycles: {1,2}
+Considering the GOOD cycle 1
+Considering the pair of edges +(L,3) and -(-4,-3)
+Reversal: L -3 3 -4 4 1 -1 2 -2 -5 5 R *Last list selected
+Number of cycles after reversion: 4
+Number of bad components after reversion: 0
+Considering the pair of edges +(L,3) and -(2,-1)
+Reversal: L -1 1 4 -4 -3 3 2 -2 -5 5 R
+Number of cycles after reversion: 4
+Number of bad components after reversion: 0
+
+Considering the component with cycles: {3}
+
+=================================
+Begin reversal
+=================================
+
+Considering the component with cycles: {1,3}
+Considering the GOOD cycle 1
+Considering the pair of edges +(L,-3) and -(2,-1)
+Reversal: L -1 1 4 -4 3 -3 2 -2 -5 5 R *Last list selected
+Number of cycles after reversion: 5
+Number of bad components after reversion: 0
+
+Considering the component with cycles: {2}
+
+Considering the component with cycles: {4}
+
+=================================
+Begin reversal
+=================================
+
+Considering the component with cycles: {1}
+
+Considering the component with cycles: {2}
+Considering the GOOD cycle 2
+Considering the pair of edges +(1,4) and -(-5,-2)
+Reversal: L -1 1 -2 2 -3 3 -4 4 -5 5 R *Last list selected
+Number of cycles after reversion: 6
+Number of bad components after reversion: 0
+
+Considering the component with cycles: {3}
+
+Considering the component with cycles: {4}
+
+Considering the component with cycles: {5}
+----------------------------------------
+
+L -3 3 2 -2 1 -1 -4 4 5 -5 R
+Edges:
++(L,-3)
++(-3,2)
+-(2,3)
++(3,-4)
+-(-4,-1)
+-(-1,L)
++(-2,1)
+-(1,-2)
++(4,5)
++(5,R)
+-(R,-5)
+-(-5,4)
+
+Cycles:
+Cycle 1 is Good -> Divergent edges +(L,-3) and -(2,3)
+L -3 2 3 -4 -1 
+Cycle 2 is Great
+-2 1 
+Cycle 3 is Good -> Divergent edges +(4,5) and -(R,-5)
+4 5 R -5 
+
+Components:
+Component 1 is Good
+Cycles: 1 
+Component 2 is Good
+Cycles: 2 
+Component 3 is Good
+Cycles: 3 
+
+=================================
+Begin reversal
+=================================
+
+Considering the component with cycles: {1}
+Considering the GOOD cycle 1
+Considering the pair of edges +(L,-3) and -(2,3)
+Reversal: L 3 -3 2 -2 1 -1 -4 4 5 -5 R *Last list selected
+Number of cycles after reversion: 4
+Number of bad components after reversion: 0
+Considering the pair of edges +(L,-3) and -(-4,-1)
+Reversal: L -1 1 -2 2 3 -3 -4 4 5 -5 R
+Number of cycles after reversion: 4
+Number of bad components after reversion: 0
+
+Considering the component with cycles: {2}
+
+Considering the component with cycles: {3}
+Considering the GOOD cycle 3
+Considering the pair of edges +(4,5) and -(R,-5)
+Reversal: L -3 3 2 -2 1 -1 -4 4 -5 5 R
+Number of cycles after reversion: 4
+Number of bad components after reversion: 0
+
+=================================
+Begin reversal
+=================================
+
+Considering the component with cycles: {1}
+Considering the GOOD cycle 1
+Considering the pair of edges +(L,3) and -(-4,-1)
+Reversal: L -1 1 -2 2 -3 3 -4 4 5 -5 R *Last list selected
+Number of cycles after reversion: 5
+Number of bad components after reversion: 0
+
+Considering the component with cycles: {2}
+
+Considering the component with cycles: {3}
+
+Considering the component with cycles: {4}
+Considering the GOOD cycle 4
+Considering the pair of edges +(4,5) and -(R,-5)
+Reversal: L 3 -3 2 -2 1 -1 -4 4 -5 5 R
+Number of cycles after reversion: 5
+Number of bad components after reversion: 0
+
+=================================
+Begin reversal
+=================================
+
+Considering the component with cycles: {1}
+
+Considering the component with cycles: {2}
+
+Considering the component with cycles: {3}
+
+Considering the component with cycles: {4}
+
+Considering the component with cycles: {5}
+Considering the GOOD cycle 5
+Considering the pair of edges +(4,5) and -(R,-5)
+Reversal: L -1 1 -2 2 -3 3 -4 4 -5 5 R *Last list selected
+Number of cycles after reversion: 6
+Number of bad components after reversion: 0
+----------------------------------------
+
+L -3 3 5 -5 -8 8 6 -6 -4 4 7 -7 -9 9 -2 2 -1 1 -10 10 11 -11 R
+Edges:
++(L,-3)
++(-3,2)
++(2,-1)
+-(-1,L)
++(3,5)
++(5,-6)
++(-6,-4)
+-(-4,3)
++(-5,-8)
++(-8,7)
+-(7,4)
+-(4,-5)
++(8,6)
++(6,-7)
++(-7,-9)
+-(-9,8)
++(9,-2)
++(-2,1)
++(1,-10)
+-(-10,9)
++(10,11)
++(11,R)
+-(R,-11)
+-(-11,10)
+
+Cycles:
+Cycle 1 is Bad
+L -3 2 -1 
+Cycle 2 is Bad
+3 5 -6 -4 
+Cycle 3 is Good -> Divergent edges +(-5,-8) and -(7,4)
+-5 -8 7 4 
+Cycle 4 is Bad
+8 6 -7 -9 
+Cycle 5 is Bad
+9 -2 1 -10 
+Cycle 6 is Good -> Divergent edges +(10,11) and -(R,-11)
+10 11 R -11 
+
+Components:
+Component 1 is Bad
+Cycles: 1 5 
+Component 2 is Good
+Cycles: 2 3 4 
+Component 3 is Good
+Cycles: 6 
+
+=================================
+Begin reversal
+=================================
+
+Considering the component with cycles: {2,3,4}
+Considering the GOOD cycle 3
+Considering the pair of edges +(-5,-8) and -(7,4)
+Reversal: L -3 3 5 -5 4 -4 -6 6 8 -8 7 -7 -9 9 -2 2 -1 1 -10 10 11 -11 R *Last list selected
+Number of cycles after reversion: 7
+Number of bad components after reversion: 1
+
+Considering the component with cycles: {6}
+Considering the GOOD cycle 6
+Considering the pair of edges +(10,11) and -(R,-11)
+Reversal: L -3 3 5 -5 -8 8 6 -6 -4 4 7 -7 -9 9 -2 2 -1 1 -10 10 -11 11 R
+Number of cycles after reversion: 7
+Number of bad components after reversion: 1
+
+=================================
+Begin reversal
+=================================
+
+Considering the component with cycles: {2}
+Considering the GOOD cycle 2
+Considering the pair of edges +(3,5) and -(-6,-4)
+Reversal: L -3 3 -4 4 -5 5 -6 6 8 -8 7 -7 -9 9 -2 2 -1 1 -10 10 11 -11 R *Last list selected
+Number of cycles after reversion: 8
+Number of bad components after reversion: 1
+
+Considering the component with cycles: {3}
+
+Considering the component with cycles: {4}
+Considering the GOOD cycle 4
+Considering the pair of edges +(6,8) and -(-9,-7)
+Reversal: L -3 3 5 -5 4 -4 -6 6 -7 7 -8 8 -9 9 -2 2 -1 1 -10 10 11 -11 R
+Number of cycles after reversion: 8
+Number of bad components after reversion: 1
+
+Considering the component with cycles: {5}
+
+Considering the component with cycles: {7}
+Considering the GOOD cycle 7
+Considering the pair of edges +(10,11) and -(R,-11)
+Reversal: L -3 3 5 -5 4 -4 -6 6 8 -8 7 -7 -9 9 -2 2 -1 1 -10 10 -11 11 R
+Number of cycles after reversion: 8
+Number of bad components after reversion: 1
+
+=================================
+Begin reversal
+=================================
+
+Considering the component with cycles: {2}
+
+Considering the component with cycles: {3}
+
+Considering the component with cycles: {4}
+
+Considering the component with cycles: {5}
+Considering the GOOD cycle 5
+Considering the pair of edges +(6,8) and -(-9,-7)
+Reversal: L -3 3 -4 4 -5 5 -6 6 -7 7 -8 8 -9 9 -2 2 -1 1 -10 10 11 -11 R *Last list selected
+Number of cycles after reversion: 9
+Number of bad components after reversion: 1
+
+Considering the component with cycles: {6}
+
+Considering the component with cycles: {8}
+Considering the GOOD cycle 8
+Considering the pair of edges +(10,11) and -(R,-11)
+Reversal: L -3 3 -4 4 -5 5 -6 6 8 -8 7 -7 -9 9 -2 2 -1 1 -10 10 -11 11 R
+Number of cycles after reversion: 9
+Number of bad components after reversion: 1
+
+=================================
+Begin reversal
+=================================
+
+Considering the component with cycles: {2}
+
+Considering the component with cycles: {3}
+
+Considering the component with cycles: {4}
+
+Considering the component with cycles: {5}
+
+Considering the component with cycles: {6}
+
+Considering the component with cycles: {7}
+
+Considering the component with cycles: {9}
+Considering the GOOD cycle 9
+Considering the pair of edges +(10,11) and -(R,-11)
+Reversal: L -3 3 -4 4 -5 5 -6 6 -7 7 -8 8 -9 9 -2 2 -1 1 -10 10 -11 11 R *Last list selected
+Number of cycles after reversion: 10
+Number of bad components after reversion: 1
+
+
+In presence of bad components...
+----------------------------------------
+

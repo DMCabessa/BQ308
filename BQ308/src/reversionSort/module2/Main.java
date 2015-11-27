@@ -9,9 +9,6 @@ public class Main {
 	private static final int L = Integer.MIN_VALUE;
 	private static final int R = Integer.MAX_VALUE;
 	
-	private static final boolean REALITY = false;
-	private static final boolean DESIRE = true;
-	
 	public static void main(String[] args) {
 		List<List<Integer>> data = FileHandler.read();
 		for(List<Integer> l : data){
@@ -23,31 +20,38 @@ public class Main {
 			int[] terminals = init(input);
 			System.out.println(arrayToString(terminals));
 			
-			Edge[] reality = new Edge[terminals.length];
-			Edge[] desire = new Edge[terminals.length];
+			Struct struct = Struct.init(terminals);
 			
-			Edge[][] edges = buildRealityDesire(terminals);
-			
-			reality = edges[0];
-			desire = edges[1];
+			Edge[] reality = struct.getReality();
+			Edge[] desire = struct.getDesire();
+
 			System.out.println(edgesToString(reality,desire,terminals));
 			
-			List<Cycle> cycles = buildCycles(reality,desire,terminals);
+			List<Cycle> cycles = struct.getCycles();
 			System.out.print(cyclesToString(cycles, terminals));
 			
-			List<Component> components = buildComponents(reality, cycles);
+			List<Component> components = struct.getComponents();
 			System.out.print(componetsToString(components));
-			System.out.println("----------------------------------------\n");
 			
 			// Here begins the sort
 			// ###############################################################
-			//while(hasGoodComponents(components)){
-				for(Component c : components){
+			boolean hasGoodComponents = hasGoodComponents(components, cycles);
+			Struct loopStruct = null;
+			int[] loopTerminals = null;
+			while(hasGoodComponents){
+				System.out.println("\n=================================\n"
+						+ "Begin reversal\n"
+						+ "=================================");
+				List<Component> loopComponents = loopStruct != null ? loopStruct.getComponents() : components;
+				List<Cycle> loopCycles = loopStruct != null ? loopStruct.getCycles() : cycles;
+				terminals = loopTerminals != null ? loopTerminals : terminals;
+				
+				for(Component c : loopComponents){
 					if(c.isGood()){
-						System.out.println("Considering the component with cycles: "+c.toString());
+						System.out.println("\nConsidering the component with cycles: "+c.toString());
 						
 						for(Integer i : c.getElements()){
-							Cycle cycle = cycles.get(i);
+							Cycle cycle = loopCycles.get(i);
 							
 							if(cycle.getType() == Cycle.GOOD){
 								System.out.println("Considering the GOOD cycle "+(cycle.getId()+1));
@@ -66,8 +70,20 @@ public class Main {
 											int idx_right = ak.isPositive() ? ak.getLeft() : ak.getRight();
 											
 											int[] nextList = reversal(terminals, idx_left, idx_right);
+											Struct nextStruct = Struct.init(nextList);
+											System.out.print("Reversal: "+arrayToString(nextList));
 											
-											System.out.println("Reversal: "+arrayToString(nextList));
+											if(loopStruct == null
+													|| (nextStruct.getCycles().size() > loopStruct.getCycles().size()
+															&& nextStruct.badComponents() <= loopStruct.badComponents())){
+												loopStruct = nextStruct;
+												loopTerminals = nextList;
+												System.out.print(" *Last list selected");
+											}
+											System.out.println();
+											
+											System.out.println("Number of cycles after reversion: "+nextStruct.getCycles().size());
+											System.out.println("Number of bad components after reversion: "+nextStruct.badComponents());
 										}
 									}
 								}
@@ -75,8 +91,16 @@ public class Main {
 						}
 					}
 				}
-			//}
+				
+				hasGoodComponents = hasGoodComponents(loopStruct.getComponents(), loopStruct.getCycles());
+			}
+			
+			if((loopStruct != null && loopStruct.badComponents() > 0) || struct.badComponents() > 0){
+				System.out.println("\n\nIn presence of bad components...");
+			}
 			// ###############################################################
+			
+			System.out.println("----------------------------------------\n");
 		}
 	}
 	
@@ -101,11 +125,18 @@ public class Main {
 		   System.arraycopy(a, 0, c, 0, aLen);
 		   System.arraycopy(b, 0, c, aLen, bLen);
 		   return c;
-		}
+	}
 
-	private static boolean hasGoodComponents(List<Component> components){
+	private static boolean hasGoodComponents(List<Component> components, List<Cycle> cycles){
 		for(Component c : components){
-			if(c.isGood()) return true;
+			if(c.isGood()){
+				if(c.getElements().size() == 1){
+					if(cycles.get((int) c.getElements().toArray()[0]).getType() == Cycle.GREAT){
+						continue;
+					}
+				}
+				return true;
+			}
 		}
 		
 		return false;
@@ -130,101 +161,6 @@ public class Main {
 		return str;
 	}
 
-	private static List<Component> buildComponents(Edge[] reality, List<Cycle> cycles) {
-		int numCycles = cycles.size();
-		List<Component> components = new ArrayList<Component>();
-		for(int i = 0; i<numCycles; i++){
-			Component c = new Component(i);
-			c.setType(cycles.get(i).getType() == Cycle.GOOD ? Component.GOOD : Component.BAD);
-			components.add(c);
-		}
-		
-		Edge[] edges = new Edge[reality.length];
-		for(int i = 0; i<edges.length; i++){
-			for(Edge e : reality){
-				if(e.getLeft() == (i*2) || e.getRight() == (i*2)) edges[i] = e;
-			}
-		}
-		
-		if(edges.length >= 4){
-			for(int i = 0; i<edges.length-3; i++){
-				for(int j = i+1; j<edges.length-2; j++){
-					for(int k = j+1; k<edges.length-1; k++){
-						for(int l = k+1; l<edges.length; l++){
-							int ai = edges[i].getCycleId();
-							int aj = edges[j].getCycleId();
-							int ak = edges[k].getCycleId();
-							int al = edges[l].getCycleId();
-							
-							if(ai == ak && aj == al){
-								components.get(ai).union(components.get(aj));
-								components.get(ai).setType(components.get(ai).isGood() || components.get(aj).isGood());
-								components.set(aj, new Component());
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		List<Component> filledComponents = new ArrayList<Component>();
-		for(Component c : components){
-			if(c.getElements().size() > 0) filledComponents.add(c);
-		}
-		
-		return filledComponents;
-	}
-
-	private static List<Cycle> buildCycles(Edge[] reality, Edge[] desire, int[] list) {
-		boolean[] visited = new boolean[list.length];
-		List<Cycle> cycles = new ArrayList<Cycle>();
-		int e_idx = 0;
-		int id = 0;
-		
-		while(next(visited) >= 0){
-			Cycle cycle = new Cycle();
-			List<Edge> edges = new ArrayList<Edge>();
-			
-			List<Integer> vertexes = new ArrayList<Integer>();
-			int idx = next(visited);
-			vertexes.add(idx);
-			visited[idx] = true;
-			int type = 0;
-			boolean finish = false, hasPositive = false, hasNegative = false;
-			
-			while(!finish){
-				vertexes.add(reality[e_idx].getRight());
-				visited[reality[e_idx].getRight()] = true;
-				reality[e_idx].setCycleId(id);
-				desire[e_idx].setCycleId(id);
-				
-				edges.add(reality[e_idx]);
-				
-				if(reality[e_idx].isPositive()) hasPositive = true;
-				else hasNegative = true;
-				if(desire[e_idx].getRight() != idx) {
-					vertexes.add(desire[e_idx].getRight());
-					visited[desire[e_idx].getRight()] = true;
-				}
-				else finish = true;
-				e_idx++;
-			}
-			
-			if(vertexes.size() == 2) type = Cycle.GREAT;
-			else if(hasPositive && hasNegative) type = Cycle.GOOD;
-			else type = Cycle.BAD;
-			
-			cycle.setId(id);
-			cycle.setType(type);
-			cycle.setVertexes(vertexes);
-			cycle.setEdges(edges);
-			cycles.add(cycle);
-			id++;
-		}
-		
-		return cycles;
-	}
-
 	private static int[] init(int[] input) {
 		int[] result = new int[input.length*2+2];
 		
@@ -238,75 +174,6 @@ public class Main {
 		}
 		
 		return result;
-	}
-	
-	private static Edge[][] buildRealityDesire(int[] list) {
-		boolean edge = REALITY;
-		boolean finish = false;
-		Edge[][] result = new Edge[2][list.length/2];
-		Edge[] reality = new Edge[list.length/2];
-		Edge[] desire = new Edge[list.length/2];
-		int r_idx = 0, d_idx = 0, idx = 0;
-		
-		boolean[] visited = new boolean[list.length];
-		
-		while(!finish){
-			if(visited[idx]) idx = next(visited);
-			visited[idx] = true;
-			
-			if(edge == REALITY){
-				int next = searchReality(list, idx);
-				reality[r_idx] = new Edge(idx, next);
-				idx = next;
-				r_idx++;
-				edge = DESIRE;
-			}else{
-				int next = searchDesired(list, idx); 
-				desire[d_idx] = new Edge(idx, next);
-				idx = next;
-				d_idx++;
-				edge = REALITY;
-			}
-			
-			if(reality[reality.length-1] != null && desire[desire.length-1] != null){
-				finish = true;
-			}
-		}
-		
-		result[0] = reality;
-		result[1] = desire;
-		return result;
-	}
-	
-	private static int next(boolean[] visited) {
-		for(int i = 0; i<visited.length; i++){
-			if(!visited[i]) return i;
-		}
-		return -1;
-	}
-
-	private static int searchDesired(int[] list, int idx) {
-		int currentVal = list[idx];
-		int nextVal = currentVal < 0 ? ((-currentVal)-1) : (-(currentVal+1));
-		if(currentVal == R) nextVal = (list.length-2)/2;
-		else if(currentVal == -1) nextVal = L;
-		else if(currentVal == (list.length-2)/2) nextVal = R;
-		
-		for(int i = 0; i<list.length; i++){
-			if(list[i] == nextVal) return i;
-		}
-		
-		return -1;
-	}
-	
-	private static int searchReality(int[] list, int idx) {
-		int currentVal = list[idx];
-		int leftVal = idx > 0 ? list[idx-1] : -currentVal;
-		int rightVal = idx < list.length-1 ? list[idx+1] : -currentVal;
-		
-		if(currentVal == -leftVal) return idx+1;
-		else if(currentVal == -rightVal) return idx-1;
-		else return -1;
 	}
 	
 	private static String arrayToString(int[] arg){
@@ -352,6 +219,22 @@ public class Main {
 		for(Cycle c : cycles){
 			str += "Cycle " + (c.getId()+1) + " is ";  
 			str += c.getType() == Cycle.GREAT ? "Great" : c.getType() == Cycle.GOOD ? "Good" : "Bad";
+			boolean halt = false;
+			if(c.getType() == Cycle.GOOD){
+				str += " -> Divergent edges ";
+				for(int i = 0; i<cycles.size()-1 && !halt; i++){
+					for(int j = i+1; j<cycles.size() && !halt; j++){
+						Edge ai = c.getEdges().get(i);
+						Edge aj = c.getEdges().get(j);
+						
+						if((ai.isPositive() && !aj.isPositive()) || (!ai.isPositive() && aj.isPositive())){
+							str += singleEdgeToString(ai, list) + " and ";
+							str += singleEdgeToString(aj, list);
+							halt = true;
+						}
+					}
+				}
+			}
 			str += "\n";
 			
 			for(Integer i : c.getVertexes()){
